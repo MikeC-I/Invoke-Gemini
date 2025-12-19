@@ -1,0 +1,4 @@
+{
+    "ApiKey": "YOUR_GOOGLE_AI_STUDIO_KEY",
+    "Model": "gemini-2.5-flash"
+}
