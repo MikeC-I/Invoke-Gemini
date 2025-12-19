@@ -101,11 +101,25 @@ end {
     if ($Interactive) {
         Write-Information "Starting Interactive Session (Model: $FinalModel)"
         $ChatHistory = @()
-        Write-Host "--- Gemini Interactive (Type 'exit' to quit) ---" -ForegroundColor Cyan
+        # Write-Host "--- Gemini Interactive (Type 'exit' to quit) ---" -ForegroundColor Cyan
+        Clear-Host
+        $modelMessage = "Using Model - $FinalModel"
+        $modelPadding = " " * ((50 - $modelMessage.Length) / 2)
+        Write-Host "=============== Gemini Interactive ===============" -ForegroundColor Cyan
+        Write-Host "$($modelPadding+$modelMessage+$modelPadding)" -ForegroundColor Cyan
+        Write-Host "==================================================" -ForegroundColor Cyan
+        Write-Host "     Type 'exit', 'quit', or 'cls' (to clear)." -ForegroundColor Gray
+        Write-Host ""
 
         while ($true) {
             $UserInput = Read-Host "`nYou"
             if ($UserInput -in "exit", "quit") { break }
+            if ($UserInput -eq 'cls') {
+                $ChatHistory = @()
+                Clear-Host
+                Write-Host "History Cleared" -ForegroundColor Yellow
+                continue
+            }
             if ([string]::IsNullOrWhiteSpace($UserInput)) { continue }
 
             $ChatHistory += @{ role = "user"; parts = @(@{ text = $UserInput }) }
